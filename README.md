@@ -11,7 +11,28 @@ Follow these steps:
 
 
 # Using izy-proxy macros and functions
-The SDK has syntactical parity with izy-proxy. For more information refer to izy-proxy documentation.
+The SDK has syntactical parity with izy-proxy. For more information refer to izy-proxy documentation. Some of the Objective-C and CLANG features have been utilitized to simplify the workflow in the environment and achieve closer parity with Javascript environment.
+
+## CLANG Container/Collection Literals 
+Use `NSDictionary *` for representing JSON objects in conjuction with boxed literals:
+
+    monitoring.log = @{ @"key": @"service", @"msg": @{
+        @"action": @"start",
+        @"context": @{
+            @"key": @"value"
+        }
+    }};
+
+See [ObjectiveCLiterals reference]. 
+
+## CLANG property setters
+Use setters to achieve better parity with js syntax and simplify function calls with single input and no return values, for example the following:
+
+    [monitoring log:@{}];
+    
+will become
+
+    monitoring.log = @{};
 
 # Links
 * [github]
@@ -20,8 +41,11 @@ The SDK has syntactical parity with izy-proxy. For more information refer to izy
 # ChangeLog
 
 ## V6.9
+* 6900005: monitoring - implement log function as a property setter to simplify client code syntax
+* 6900004: json/io use class method to implement the loadById functionality 
 * 6900003: add monitoring.log interface
 * 6900002: add json/loadById interface
 * 6900001: add the Objective-C SDK 
 
+[ObjectiveCLiterals reference]: https://clang.llvm.org/docs/ObjectiveCLiterals.html
 [github]: https://github.com/izyware/ios
