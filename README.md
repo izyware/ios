@@ -33,6 +33,10 @@ Use setters to achieve better parity with js syntax and simplify function calls 
 will become
 
     monitoring.log = @{};
+    
+## JS Equivalents
+* split: componentsSeparatedByString
+* join: componentsJoinedByString
 
 # Links
 * [github]
@@ -41,6 +45,14 @@ will become
 # ChangeLog
 
 ## V6.9
+* 6900008: string - stringConcat macro
+* 6900007: asyncio - implement IZYrun macro to simplfy chain action process in ObjectiveC
+
+        NSDictionary* outcome = IZYrun(@"//inline/json?loadById", @{ @"id": @"queryObject" });
+        NSDictionary* queryObject = outcome[@"data"];
+
+
+* 6900006: asyncio - port run and ldmod and //inline/ from izy-proxy
 * 6900005: monitoring - implement log function as a property setter to simplify client code syntax
 * 6900004: json/io use class method to implement the loadById functionality 
 * 6900003: add monitoring.log interface
