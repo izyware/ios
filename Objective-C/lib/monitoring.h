@@ -1,6 +1,7 @@
 @interface izyMonitoring : NSObject
 @property NSDictionary *verbose;
-- (void)log:(NSDictionary*) queryObject;
+@property (nonatomic) id log;
+- (void)printLog:(NSDictionary*) queryObject;
 @end
 
 
@@ -8,8 +9,8 @@
 #define izyObjectiveCLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation izyMonitoring
-// use { key: 'verbosekey', msg: {} }
-- (void)log:(NSDictionary*) queryObject {
+@synthesize log = _log;
+- (void) setLog:(NSDictionary *)queryObject {
     NSDate* currentDate = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"dd HH:mm:ss";
