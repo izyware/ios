@@ -1,13 +1,15 @@
 @interface izyJSON : NSObject
-- (id)loadById:(NSString*) path;
+// class method (not interface method)
++ (NSDictionary *)loadById:(NSString*) path;
 @end
 
 @implementation izyJSON
 // The return value is either NSArray * or NSDictionary *
-- (id)loadById:(NSString*) path {
-    NSString *resourcePath = [[NSBundle mainBundle] pathForResource:path ofType:@"json"];
++ (NSDictionary *)loadById:(NSDictionary*) queryObject {
+    NSString *_id = queryObject[@"id"];
+    if (!_id) @throw @{ @"reason": @"please specify either an object or a string to loadById" };
+    NSString *resourcePath = [[NSBundle mainBundle] pathForResource:_id ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:resourcePath];
-    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return @{ @"success": @true, @"data": [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil] };
 }
 @end
-
