@@ -17,12 +17,13 @@
     NSString* key = queryObject[@"key"];
     id msg = queryObject[@"msg"];
     BOOL shouldIgnore = false;
-    if (!verbose[key]) {
-      shouldIgnore = true;
-      if (verbose[@"forceUpToLevel"]) {
-        if (level <= verbose[@"forceUpToLevel"]) shouldIgnore = false;
-      }
+    if ([verbose objectForKey:key] == nil || ([verbose[key] isKindOfClass:[NSNumber class]] && [verbose[key] isEqual:@0])) {
+        shouldIgnore = true;
+        /* if (verbose[@"forceUpToLevel"]) {
+            if (level <= verbose[@"forceUpToLevel"]) shouldIgnore = false;
+        }*/
     }
+
     if (shouldIgnore) return;
     NSString* txt = @"";
     int msgType = -1;
