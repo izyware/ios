@@ -32,7 +32,7 @@
     else if ([msg isKindOfClass:[NSDictionary class]])
         msgType = 1;
     NSString* prefix = [NSString stringWithFormat:@"%@", key];
-    //var fullcontext = ['', '', ''];
+    NSMutableArray  *fullcontext = [NSMutableArray arrayWithObjects:@"", @"", @"", nil];
     //var extraInfoInLogs = null;
     switch(msgType) {
         case 1: // object
@@ -62,30 +62,36 @@
                   txt += '(' + modtask.fixLen(msg[p], 20) + ') ';
                   break;
                 default:*/
-                txt = stringConcat(txt, p, @": ");
-                if ([value isKindOfClass:[NSDictionary class]]) {
-                    NSError *error;
-                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value
-                        options:kNilOptions //options:NSJSONWritingPrettyPrinted
-                        error:&error];
-                    NSString *jsonString;
-                    if (!jsonData) {
-                        jsonString = @"error";
-                        // NSLog(@"error: %@", error);
-                    } else {
-                        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                    }
-                    [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
-                    txt = stringConcat(txt, jsonString);
+                
+                if ([p isEqual:@"context"]) {
+                    [fullcontext replaceObjectAtIndex:0 withObject:msg[p]]; // fullcontext[0] = msg[p];
                 } else {
-                    txt = stringConcat(txt, value);
+                    txt = stringConcat(txt, p, @": ");
+                    if ([value isKindOfClass:[NSDictionary class]]) {
+                        NSError *error;
+                        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value
+                                                                           options:kNilOptions //options:NSJSONWritingPrettyPrinted
+                                                                             error:&error];
+                        NSString *jsonString;
+                        if (!jsonData) {
+                            jsonString = @"error";
+                            // NSLog(@"error: %@", error);
+                        } else {
+                            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                        }
+                        [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+                        txt = stringConcat(txt, jsonString);
+                    } else {
+                        txt = stringConcat(txt, value);
+                    }
+                    txt = stringConcat(txt, @", ");
                 }
-                txt = stringConcat(txt, @", ");
             }
             break;
     }
     NSString* line = stringConcat(
                                   @"[",
+                                  [fullcontext componentsJoinedByString:@","],
         /*, modtask.fixLen(prefix + '@' + fullcontext.join('.'), 40)*/
         @"] ",
                                   txt);
