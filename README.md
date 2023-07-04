@@ -38,13 +38,27 @@ will become
 * split: componentsSeparatedByString
 * join: componentsJoinedByString
 
+## Using Blocks as class properties to emulate js callbacks
+See [can-i-use-objective-c-blocks-as-properties]. Note that if your dont have ARC enabled, you will need to release the block if the property was declared copy. 
+
+## Using XCode Design Environment
+Follow these steps:
+* Place the UI component on the canvas and add the constraints
+* Right-Click on the item in scenes hierarchy and drag it to the .h file to add the property and link to an outlet in the xib XML
+* Add the protocol to the controller .h file (i.e. UIWebViewDelegate)
+
 # Links
 * [github]
 * location: `apps/ios`
 
 # ChangeLog
+## V7.0
+* 7000002: monitoring - extract name and action key and improve ingestion technique
+* 7000001: monitoring - extract context key
 
 ## V6.9
+* 6900010: monitoring - fix logging filter bug 
+* 6900009: refactor libraries 
 * 6900008: string - stringConcat macro
 * 6900007: asyncio - implement IZYrun macro to simplfy chain action process in ObjectiveC
 
@@ -59,5 +73,6 @@ will become
 * 6900002: add json/loadById interface
 * 6900001: add the Objective-C SDK 
 
+[can-i-use-objective-c-blocks-as-properties]: https://stackoverflow.com/questions/3935574/can-i-use-objective-c-blocks-as-properties
 [ObjectiveCLiterals reference]: https://clang.llvm.org/docs/ObjectiveCLiterals.html
 [github]: https://github.com/izyware/ios
