@@ -52,19 +52,13 @@
                 case 'connectionId':
                   fullcontext[1] = msg[p];
                   break;
-                case 'name':
-                  fullcontext[3] = msg[p];
-                  break;
-                case 'context':
-                  fullcontext[0] = msg[p];
-                  break;
-                case 'action':
-                  txt += '(' + modtask.fixLen(msg[p], 20) + ') ';
-                  break;
                 default:*/
-                
                 if ([p isEqual:@"context"]) {
                     [fullcontext replaceObjectAtIndex:0 withObject:msg[p]]; // fullcontext[0] = msg[p];
+                } else if ([p isEqual:@"name"]) {
+                    [fullcontext replaceObjectAtIndex:2 withObject:msg[p]]; // fullcontext[2] = msg[p];
+                } else if ([p isEqual:@"action"]) {
+                    txt = stringConcat(txt, @"(", [msg[p] stringByPaddingToLength: 20 withString: @" " startingAtIndex:0], @") "); // txt += '(' + modtask.fixLen(msg[p], 20) + ') ';
                 } else {
                     txt = stringConcat(txt, p, @": ");
                     if ([value isKindOfClass:[NSDictionary class]]) {
@@ -90,18 +84,22 @@
             break;
     }
     NSString* line = stringConcat(
-                                  @"[",
-                                  [fullcontext componentsJoinedByString:@","],
-        /*, modtask.fixLen(prefix + '@' + fullcontext.join('.'), 40)*/
-        @"] ",
-                                  txt);
-
+     @"[",
+     [stringConcat(prefix, @"@", [fullcontext componentsJoinedByString:@"."]) stringByPaddingToLength: 40 withString: @" " startingAtIndex:0], // modtask.fixLen(prefix + '@' + fullcontext.join('.'), 40)
+      @"] ",
+      txt
+    );
 /*    if (extraInfoInLogs) {
       console.log('_________________________ extraInfoInLogs __________________________');
       console.log(extraInfoInLogs);
       console.log('^^^^^^^^^^^^^^^^^^^^^^^^^ extraInfoInLogs ^^^^^^^^^^^^^^^^^^^^^^^^^');
     } else {
     }*/
+    if (self.monitoringIngestionService) {
+        self.monitoringIngestionService(@{
+            @"line": line
+        });
+    }
     izyObjectiveCLog(@"%@ %@", timestampInfo.tzString, line);
 }
 @end

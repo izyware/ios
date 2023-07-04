@@ -1,6 +1,8 @@
 #import "string.h"
 @interface izyMonitoring : NSObject
 @property NSDictionary *verbose;
+typedef void(^IngestionServiceBlock)(NSDictionary *queryObject);
+@property (nonatomic) IngestionServiceBlock monitoringIngestionService;
 @property (nonatomic) id log;
 - (void)printLog:(NSDictionary*) queryObject;
 @end
