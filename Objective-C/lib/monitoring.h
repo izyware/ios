@@ -1,4 +1,5 @@
 #import "string.h"
+#import "json.h"
 @interface izyMonitoring : NSObject
 @property NSDictionary *verbose;
 typedef void(^IngestionServiceBlock)(NSDictionary *queryObject);

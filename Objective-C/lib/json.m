@@ -8,4 +8,17 @@
     NSData *data = [NSData dataWithContentsOfFile:resourcePath];
     return @{ @"success": @true, @"data": [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil] };
 }
+
+// JSONInput could be a dictionary or array
++ (NSString *)serialize:(NSDictionary*) JSONInput {
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JSONInput
+        options: 0 // options:NSJSONWritingPrettyPrinted
+        error:&error];
+    if (!jsonData) {
+        @throw @{ @"reason": @"cannot serialize" };
+        // NSLog(@"%@", error);
+    }
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
 @end

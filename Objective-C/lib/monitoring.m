@@ -4,7 +4,7 @@
     if ([_queryObject isKindOfClass:[UIWebView class]]) {
         __weak typeof(self) weakSelf = self;
         weakSelf.monitoringIngestionService = ^(NSDictionary* queryObject) {
-            NSString *cmd = [NSString stringWithFormat:@"nativeCallInterface('%@')", queryObject[@"line"]];
+            NSString *cmd = [NSString stringWithFormat:@"nativeCallInterface('%@')", [[izyJSON serialize:queryObject] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
             [_queryObject stringByEvaluatingJavaScriptFromString:cmd];
         };
     }
