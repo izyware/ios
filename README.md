@@ -56,6 +56,10 @@ We recommend using WKWebView. It supports async evaluations for hybrid applicati
 
 # ChangeLog
 ## V7.0
+* 7000005: implement `deviceextension.run`
+    * refer to browser extension documentation for usage examples
+    * compatible with izy-proxy
+* 7000004: json - implement serialization functionality
 * 7000003: monitoring - implement add coupling for WKWebView
     * Apple is phasing out UIWebView and is replacing UIWebView with WKWebView. 
 * 7000002: monitoring - extract name and action key and improve ingestion technique
