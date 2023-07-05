@@ -47,12 +47,17 @@ Follow these steps:
 * Right-Click on the item in scenes hierarchy and drag it to the .h file to add the property and link to an outlet in the xib XML
 * Add the protocol to the controller .h file (i.e. UIWebViewDelegate)
 
+## WKWebView vs. UIWebView
+We recommend using WKWebView. It supports async evaluations for hybrid applications. 
+
 # Links
 * [github]
 * location: `apps/ios`
 
 # ChangeLog
 ## V7.0
+* 7000003: monitoring - implement add coupling for WKWebView
+    * Apple is phasing out UIWebView and is replacing UIWebView with WKWebView. 
 * 7000002: monitoring - extract name and action key and improve ingestion technique
 * 7000001: monitoring - extract context key
 

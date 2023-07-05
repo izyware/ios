@@ -1,4 +1,19 @@
 @implementation izyMonitoring
+@synthesize add = _add;
+- (void) setAdd:(id) _queryObject {
+    if ([_queryObject isKindOfClass:[UIWebView class]]) {
+        __weak typeof(self) weakSelf = self;
+        weakSelf.monitoringIngestionService = ^(NSDictionary* queryObject) {
+            NSString *cmd = [NSString stringWithFormat:@"nativeCallInterface('%@')", queryObject[@"line"]];
+            [_queryObject stringByEvaluatingJavaScriptFromString:cmd];
+        };
+    }
+    /* else if ([_queryObject isKindOfClass:[WKWebView class]]) {
+        NSString *cmd = [NSString stringWithFormat:@"nativeCallInterface('%@')", queryObject[@"line"]];
+        [_queryObject evaluateJavaScript:cmd, completionHandler:nil];
+    }*/
+}
+
 @synthesize log = _log;
 - (void) setLog:(NSDictionary *)queryObject {
     NSDate* currentDate = [NSDate date];
@@ -97,7 +112,8 @@
     }*/
     if (self.monitoringIngestionService) {
         self.monitoringIngestionService(@{
-            @"line": line
+            @"line": line,
+            @"queryObject": queryObject
         });
     }
     izyObjectiveCLog(@"%@ %@", timestampInfo.tzString, line);

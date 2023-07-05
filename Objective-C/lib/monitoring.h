@@ -4,6 +4,7 @@
 typedef void(^IngestionServiceBlock)(NSDictionary *queryObject);
 @property (nonatomic) IngestionServiceBlock monitoringIngestionService;
 @property (nonatomic) id log;
+@property (nonatomic) id add;
 - (void)printLog:(NSDictionary*) queryObject;
 @end
 
