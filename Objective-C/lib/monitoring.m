@@ -113,7 +113,8 @@
     if (self.monitoringIngestionService) {
         self.monitoringIngestionService(@{
             @"line": line,
-            @"queryObject": queryObject
+            @"queryObject": queryObject,
+            @"tzString": timestampInfo.tzString
         });
     }
     izyObjectiveCLog(@"%@ %@", timestampInfo.tzString, line);
