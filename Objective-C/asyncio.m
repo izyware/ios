@@ -28,4 +28,10 @@
     if (!data) @throw @{ @"reason": @"resource not found"};
     [container loadData:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding] MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:nil];
 }
++ (void)loadURL:(id) container _id:(NSString*)_id {
+    if (!_id) @throw @{ @"reason": @"please specify either an object or a string" };
+    NSURL *URL = [NSURL URLWithString:_id];
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
+    [container loadRequest:requestURL];
+}
 @end
